@@ -1,0 +1,16 @@
+config("asap_config") {
+  include_dirs = [ "include" ]
+}
+
+source_set("asap") {
+  sources = [
+    "include/asap.h",
+    "include/constants.h",
+    "include/datetime.h",
+    "include/duration.h",
+    "include/literals.h",
+    "include/operators.h",
+    "include/period.h",
+  ]
+  public_configs = [ ":asap_config" ]
+}
