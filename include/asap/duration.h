@@ -39,6 +39,7 @@ namespace asap {
         template<uint64_t convert2> duration<convert> & operator-=(const duration<convert2> & other);
         template<uint64_t convert2> duration<convert> & operator=(const duration<convert2> & other);
         std::string str() const;
+        std::string short_str(bool with_suffix) const;
 
       private:
         double value;

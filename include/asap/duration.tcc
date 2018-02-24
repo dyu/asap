@@ -81,6 +81,29 @@ namespace asap {
 
     return str;
   }
+  
+  template <uint64_t convert> inline std::string duration<convert>::short_str(bool with_suffix) const {
+    auto seconds = static_cast<int>(std::fabs(value) * convert);
+    std::string str;
+    str.reserve(100);
+
+    // TODO: l10n i18n?
+    if (-1 != (seconds = detail::append(str, seconds, SECONDS_IN_YEAR, "year")) && str.empty() &&
+            -1 != (seconds = detail::append(str, seconds, SECONDS_IN_MONTH, "month")) && str.empty() &&
+            -1 != (seconds = detail::append(str, seconds, SECONDS_IN_WEEK, "week")) && str.empty() &&
+            -1 != (seconds = detail::append(str, seconds, SECONDS_IN_DAY, "day")) && str.empty() &&
+            -1 != (seconds = detail::append(str, seconds, SECONDS_IN_HOUR, "hour")) && str.empty() &&
+            -1 != (seconds = detail::append(str, seconds, SECONDS_IN_MINUTE, "minute")) && str.empty())
+    {
+        detail::append(str, seconds, 1, "second");
+    }
+    
+    if (!with_suffix);
+    else if (value < 0) str += " from now";
+    else str += " ago";
+
+    return str;
+  }
 
   template <uint64_t convert>
   template <uint64_t convertfrom>
